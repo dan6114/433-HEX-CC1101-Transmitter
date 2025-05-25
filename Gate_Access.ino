@@ -2,14 +2,16 @@
 #include <avr/io.h>
 #include <util/delay.h>
 
-#define FS1000A_DATA_PIN 12
-#define Btn 7
-#define LEDyellow 6
+#define FS1000A_DATA_PIN 11
+#define BTN 2
+#define LED 5
 
 bool btn_state;
 
 void setup() {
   pinMode(FS1000A_DATA_PIN, OUTPUT);
+  pinMode(BTN, INPUT);
+  pinMode(LED, OUTPUT);
 }
 
 void sendhexdigit(char c, uint16_t pulse){
@@ -166,10 +168,10 @@ void loop() {
   uint8_t i;
   uint8_t j;
   
-  btn_state=digitalRead(Btn);
+  btn_state=digitalRead(BTN);
 
-  if(btn_state == LOW){
-    digitalWrite(LEDyellow, HIGH);
+  if(digitalRead(BTN) == HIGH){
+    digitalWrite(LED, HIGH);
 
   for (i = 0; i<sizeof(sequence1); i++)
   {
@@ -187,8 +189,7 @@ void loop() {
   }
   delayMicroseconds(15519);
   }
-  delay(2000);
   } else {
-    digitalWrite(LEDyellow, LOW);
+    digitalWrite(LED, LOW);
   }
 }
